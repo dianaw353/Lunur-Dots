@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+set -e
+
+# Detect installed AUR helper
+AUR_HELPER=""
+for helper in yay paru trizen; do
+  if command -v "$helper" &>/dev/null; then
+    AUR_HELPER="$helper"
+    break
+  fi
+done
+
+{{ if .config.zram }}
+if ! pacman -Qq zram-generator &>/dev/null; then
+  sudo pacman -Syu --noconfirm zram-generator
+else
+  echo "zram-generator is already installed, skipping."
+fi
+{{ end }}
+
+{{ if .config.limine.snapper_sync }}
+if [ -z "$AUR_HELPER" ]; then
+  echo "No AUR helper installed, cannot install AUR packages."
+  exit 1
+fi
+
+echo "Checking and installing missing AUR packages..."
+
+packages_to_install=()
+for pkg in limine-entry-tool limine-snapper-sync snap-pac; do
+  if ! pacman -Qq "$pkg" &>/dev/null; then
+    packages_to_install+=("$pkg")
+  else
+    echo "AUR package $pkg is already installed, skipping."
+  fi
+done
+
+if [ ${#packages_to_install[@]} -eq 0 ]; then
+  echo "All AUR packages are already installed."
+else
+  "$AUR_HELPER" -S --noconfirm "${packages_to_install[@]}"
+fi
+{{ end }}

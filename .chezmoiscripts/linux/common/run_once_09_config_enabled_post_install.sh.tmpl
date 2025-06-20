@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+set -e
+
+{{ if .config.zram }}
+sudo tee /etc/systend/zram-generator.conf > /dev/null 2>&1 <<EOF
+[zram0]
+zram-size = ram / 2
+compression-algorithm = zstd
+swap-priority = 100
+fs-type = swap
+EOF
+{{ end }}
+
+{{ if .config.limine.snapper_sync }}
+esp_check(){
+  esp="$(bootctl --print-esp-path || grep ESP_PATH=. /etc/default/limine)"
+  if [ -z "$esp" ]; then
+    echo "ESP path could not be detected. Set \"ESP_PATH\" in /etc/default/limine and rerun chezmoi update."
+    return 1
+  fi
+}
+esp_check
+
+sudo limine-update
+sudo limine-snapper-sync
+sudo systemctl enable --now limine-snapper-sync snapper-cleanup.timer
+{{ end }}
