@@ -19,3 +19,5 @@
         enable: true
         repo: "dianaw353/Lunur-Shell"
         install_script_file_path: "install_requirements.sh"
+      # Dark or light
+      color_mode: "dark"
