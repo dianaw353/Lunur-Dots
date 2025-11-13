@@ -1,5 +1,11 @@
   config:
       # Add CachyOS repositories
+      # CachyOS is an Arch-based distribution that compiles packages
+      # with optimizations specific to modern x86_64 CPU
+      # microarchitectures. To quote, they offer "5%-20% performance
+      # uplift compared to x86-64." Check the CPU compatibility table
+      # to help decide whether to enable this configuration:
+      # https://wiki.cachyos.org/installation/installation_prepare/#x86_64-microarchitecture-level-support
       cachyos_repos: false
       nvidia_drivers:
         enable: false
