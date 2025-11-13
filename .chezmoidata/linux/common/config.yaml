@@ -1,4 +1,6 @@
   config:
+      # Add CachyOS repositories
+      cachyos_repos: false
       nvidia_drivers:
         enable: false
         prefer_open_drivers: false

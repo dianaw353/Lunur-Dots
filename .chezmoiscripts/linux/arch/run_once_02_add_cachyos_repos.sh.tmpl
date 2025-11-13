@@ -1,0 +1,14 @@
+#!/bin/bash
+
+{{- if .config.cachyos_repos }}
+PREV_PWD="$PWD"
+TEMP_DIR="$(mktemp -d)"
+cd "$TEMP_DIR"
+curl --remote-name https://mirror.cachyos.org/cachyos-repo.tar.xz
+tar -xvf cachyos-repo.tar.xz
+cd cachyos-repo
+sudo ./cachyos-repo.sh
+cd "$PREV_PWD"
+rm -rf "$TEMP_DIR"
+sudo pacman -Syu
+{{- end }}
