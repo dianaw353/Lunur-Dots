@@ -7,6 +7,7 @@ cd "$TEMP_DIR"
 curl --remote-name https://mirror.cachyos.org/cachyos-repo.tar.xz
 tar -xvf cachyos-repo.tar.xz
 cd cachyos-repo
+sed -i 's/keyserver.ubuntu.com/hkp\:\/\/keyserver.ubuntu.com\:80/' cachyos-repo.sh
 sudo ./cachyos-repo.sh
 cd "$PREV_PWD"
 rm -rf "$TEMP_DIR"
