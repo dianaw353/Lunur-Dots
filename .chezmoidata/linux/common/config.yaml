@@ -1,4 +1,23 @@
   config:
+      ### Drivers ###
+      nvidia_drivers:
+        enable: false
+        prefer_open_drivers: false
+      amd_drivers: true
+      intel_drivers: false
+
+      ### Extra packages ###
+      gaming: true
+      flatpak: false # Also includes Flatseal
+      school: true # install packages for school
+
+      ### Low Level ###
+      zram: true
+      limine:
+        snapper_sync: true
+        journalctl_desktop_notification: false
+
+      ### Repositories ###
       # Add CachyOS repositories
       # CachyOS is an Arch-based distribution that compiles packages
       # with optimizations specific to modern x86_64 CPU
@@ -7,31 +26,27 @@
       # to help decide whether to enable this configuration:
       # https://wiki.cachyos.org/installation/installation_prepare/#x86_64-microarchitecture-level-support
       cachyos_repos: false
-      nvidia_drivers:
-        enable: false
-        prefer_open_drivers: false
-      amd_drivers: true
-      intel_drivers: false
       multilib: true
+
+      ### User environment ###
       ui_environment:
         hyprland: true
+      # Kanata is a key remapping program that works at user level.
+      # Think of it like Windows PowerToys's Keyboard Manager but for
+      # Linux. The configuration here will configure Kanata to remap
+      # your Caps Lock key to act as Esc on tap and as Ctrl on hold.
       kanata: true
-      zram: true
-      limine:
-        snapper_sync: true
-        journalctl_desktop_notification: false
-      gaming: true
       wallpaper:
         color_mode: "dark"
+      extra_fonts: true # Install extra fonts as specified in the config `font_packages`
+      shell:
+        enable: true
+        repo: "dianaw353/Lunur-Shell"
+        install_script_file_path: "install_requirements.sh"
+
+      ### Virtualization ###
       qemu:
         # Install packages for QEMU
         enable: false
         # Virt Manager is a frontend for KVM/QEMU
         virt_manager: false
-      extra_fonts: true # Install extra fonts as specified in the config `font_packages`
-      flatpak: false # Also includes Flatseal
-      shell:
-        enable: true
-        repo: "dianaw353/Lunur-Shell"
-        install_script_file_path: "install_requirements.sh"
-      school: true # install packages for school
