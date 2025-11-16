@@ -42,6 +42,13 @@
       - protontricks
     flatpak: []
 
+  fcitx5_packages:
+    pacman:
+      - fcitx5
+      - fcitx5-configtool
+    aur: []
+    flatpak: []
+
   font_packages:
     pacman:
       - adobe-source-han-serif-jp-fonts

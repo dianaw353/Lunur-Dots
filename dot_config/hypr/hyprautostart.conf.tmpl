@@ -20,4 +20,7 @@ exec-once = $HYPRSCRIPTS/fabric-reload.sh
 exec-once = kanata -c ~/.config/kanata/config.kbd
 {{ end }}
 exec-once = protonvpn-app --start-minimized
+{{ if .config.fcitx5 }}
+exec-once = fcitx5 -d -r
+{{ end }}
 exec-once = kdeconnect-indicator

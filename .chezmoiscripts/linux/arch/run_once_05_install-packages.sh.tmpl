@@ -119,6 +119,20 @@ install_packages \
 {{- end }}
 
 # ----------------------------
+# 6. fcitx5 packages
+# ----------------------------
+{{- if .config.fcitx5 }}
+fcitx5_pkgs=()
+for pkg in {{ join " " .fcitx5_packages.pacman }}; do
+  fcitx5_pkgs+=("$pkg")
+done
+install_packages \
+  "${fcitx5_pkgs[*]}" \
+  "" \
+  ""
+{{- end }}
+
+# ----------------------------
 # 6. Gaming packages
 # ----------------------------
 {{- if .config.gaming }}

@@ -36,6 +36,9 @@
       # Linux. The configuration here will configure Kanata to remap
       # your Caps Lock key to act as Esc on tap and as Ctrl on hold.
       kanata: true
+      # fcitx5 is the preferred IME for Hyprland. It's pretty useful
+      # for multilingual keyboard layouts.
+      fcitx5: false
       wallpaper:
         color_mode: "dark"
       extra_fonts: true # Install extra fonts as specified in the config `font_packages`
