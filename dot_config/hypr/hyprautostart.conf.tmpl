@@ -16,14 +16,14 @@ exec-once = wl-paste --type image --watch cliphist store & # clipboard store ima
 # clears clipboard for security
 exec-once = cliphist wipe
 exec-once = $HYPRSCRIPTS/fabric-reload.sh
-{{ if .config.desktop_stack.kanata }}
+{{ if .config.system.packages.kanata }}
 # Kanata
 exec-once = kanata -c ~/.config/kanata/config.kbd
 {{ end }}
 {{ if has "proton-vpn-gtk-app" .packages.pacman }}
 exec-once = protonvpn-app --start-minimized
 {{ end }}
-{{ if .config.desktop_stack.fcitx5 }}
+{{ if .config.system.packages.fcitx5 }}
 exec-once = fcitx5 -d -r
 {{ end }}
 {{ if has "kdeconnect" .packages.pacman }}

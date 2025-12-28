@@ -19,7 +19,16 @@
           # enables printing support using cups
           # For more infomation visit: https://wiki.archlinux.org/title/CUPS
           enable: false
-          
+        packages:
+          # Kanata is a key remapping program that works at user level.
+          # Think of it like Windows PowerToys's Keyboard Manager but for
+          # Linux. The configuration here will configure Kanata to remap
+          # your Caps Lock key to act as Esc on tap and as Ctrl on hold.
+          kanata: true
+          # fcitx5 is the preferred IME for Hyprland. It's pretty useful
+          # for multilingual keyboard layouts.
+          fcitx5: true
+          extra_fonts: true # Install extra fonts as specified in the config `font_packages`
 
       ### Extra packages ###
       gaming: true
@@ -56,20 +65,11 @@
             enable: true
             repo: "dianaw353/Lunur-Shell" # currently hyprland only
             install_script_file_path: "install_requirements.sh"
-        # Kanata is a key remapping program that works at user level.
-        # Think of it like Windows PowerToys's Keyboard Manager but for
-        # Linux. The configuration here will configure Kanata to remap
-        # your Caps Lock key to act as Esc on tap and as Ctrl on hold.
-        kanata: true
-        # fcitx5 is the preferred IME for Hyprland. It's pretty useful
-        # for multilingual keyboard layouts.
-        fcitx5: false
         wallpaper:
           # enables the option to install the wallpaper repo
           enable: true
           repo: "https://github.com/dianaw353/Lunur-Wallpapers.git"
           color_mode: "dark"
-        extra_fonts: true # Install extra fonts as specified in the config `font_packages`
 
       ### Virtualization ###
       qemu:

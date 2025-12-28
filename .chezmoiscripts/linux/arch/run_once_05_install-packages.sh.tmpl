@@ -132,7 +132,7 @@ install_packages \
 # ----------------------------
 # 5. Extra fonts
 # ----------------------------
-{{- if .config.desktop_stack.extra_fonts }}
+{{- if .config.system.packages.extra_fonts }}
 install_packages \
   "{{ join " " .font_packages.pacman }}" \
   "{{ join " " .font_packages.aur }}" \
@@ -142,7 +142,7 @@ install_packages \
 # ----------------------------
 # 6. fcitx5 packages
 # ----------------------------
-{{- if .config.desktop_stack.fcitx5 }}
+{{- if .config.system.packages.fcitx5 }}
 fcitx5_pkgs=()
 for pkg in {{ join " " .fcitx5_packages.pacman }}; do
   fcitx5_pkgs+=("$pkg")
