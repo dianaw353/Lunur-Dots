@@ -107,6 +107,13 @@ add_packages \
   "{{ join " " .packages.system.virtualization.qemu.virt_manager.flatpak }}"
 {{- end }}
 
+{{- if .config.system.virtualization.virtualbox }}
+add_packages \
+  "{{ join " " .packages.system.virtualization.virtualbox.pacman }}" \
+  "{{ join " " .packages.system.virtualization.virtualbox.aur }}" \
+  "{{ join " " .packages.system.virtualization.virtualbox.flatpak }}"
+{{- end }}
+
 {{- if .config.system.packages.extra_fonts }}
 add_packages \
   "{{ join " " .packages.system.font.pacman }}" \

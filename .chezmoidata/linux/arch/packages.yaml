@@ -141,6 +141,12 @@ packages:
         aur: []
         flatpak: []
 
+      virtualbox:
+        pacman:
+          - virtualbox
+        aur: []
+        flatpak: []
+
     user_packages:
       pacman:
         - arch-wiki-lite # offline viewable arch linux wiki viewable via the terminal

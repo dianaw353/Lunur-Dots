@@ -2,6 +2,8 @@
     - video
     - input
     - render
+  virtualbox:
+    - vboxusers
   kvm_groups:
     - libvirt
     - kvm
