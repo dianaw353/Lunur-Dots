@@ -19,12 +19,12 @@ exec-once = $HYPRSCRIPTS/fabric-reload.sh
 # Kanata
 exec-once = kanata -c ~/.config/kanata/config.kbd
 {{ end }}
-{{ if has "proton-vpn-gtk-app" .packages.pacman }}
+{{ if has "proton-vpn-gtk-app" .packages.system.user_packages.pacman }}
 exec-once = protonvpn-app --start-minimized
 {{ end }}
 {{ if .config.system.packages.fcitx5 }}
 exec-once = fcitx5 -d -r
 {{ end }}
-{{ if has "kdeconnect" .packages.pacman }}
+{{ if has "kdeconnect" .packages.system.user_packages.pacman }}
 exec-once = kdeconnect-indicator
 {{ end }}
