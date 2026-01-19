@@ -5,6 +5,9 @@ on:
     branches:
       - "main"
 
+permissions:
+  contents: write # Required to create releases and tags
+
 jobs:
   create-release:
     runs-on: ubuntu-latest
@@ -17,24 +20,26 @@ jobs:
       - name: Compare current release with VERSION file
         id: compare_versions
         run: |
-          if [ "$(gh release view -q '.tagName' --json tagName)" == "$(cat assets/VERSION)" ]; then
+          # Use || true to handle cases where no release exists yet
+          CURRENT_TAG=$(gh release view -q '.tagName' --json tagName || echo "")
+          NEW_TAG=$(cat assets/VERSION)
+          
+          if [ "$CURRENT_TAG" == "$NEW_TAG" ]; then
             echo "No new release to generate!"
             echo "NEW_RELEASE=0" >> $GITHUB_ENV
-            exit
+            exit 0
           fi
-          # Apparently the tag still exists when the release is deleted from GitHub web interface...
-          # Also mock the exit status so that it always returns with code 0.
-          git push --delete origin refs/tags/$(cat assets/VERSION) || true
+          
+          # Delete existing tag on remote if it exists (but no release exists)
+          git push --delete origin refs/tags/$NEW_TAG || true
           echo "NEW_RELEASE=1" >> $GITHUB_ENV
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run catalog script
         id: run_script
         if: ${{ env.NEW_RELEASE == '1' }}
         run: |
-          # Execute the script and save the output
           if [ -x assets/scripts/GetCatalog.sh ]; then
             GH_TOKEN=$GH_TOKEN ./assets/scripts/GetCatalog.sh > release_notes.md
           else
@@ -48,7 +53,6 @@ jobs:
         id: create_tag
         if: ${{ env.NEW_RELEASE == '1' }}
         run: |
-          # Generate a new tag based on the version
           TAG_NAME=$(cat assets/VERSION)
           git tag $TAG_NAME
           git push origin $TAG_NAME
@@ -58,37 +62,31 @@ jobs:
         id: gen_proper_rel_name_title
         if: ${{ env.NEW_RELEASE == '1' }}
         run: |
-          echo "$tag_name" | sed 's/^v/PROPER_RELEASE_TITLE=Version /' >> $GITHUB_ENV
+          # Use standard formatting for ENV vars
+          CLEAN_TITLE=$(echo "$TAG_NAME" | sed 's/^v/Version /')
+          echo "PROPER_RELEASE_TITLE=$CLEAN_TITLE" >> $GITHUB_ENV
         env:
-          tag_name: ${{ env.TAG_NAME }}
+          TAG_NAME: ${{ env.TAG_NAME }}
 
-      - name: Determine whether if we're dealing with a pre-release
+      - name: Determine if pre-release
         id: is_prerelease
         if: ${{ env.NEW_RELEASE == '1' }}
         run: |
-          if echo "$tag_name" | grep '\-rc\|-b'; then
+          if echo "$TAG_NAME" | grep -q '\-rc\|-b'; then
             echo "IS_PRERELEASE=true" >> $GITHUB_ENV
           else
             echo "IS_PRERELEASE=false" >> $GITHUB_ENV
           fi
         env:
-          tag_name: ${{ env.TAG_NAME }}
-
-      - name: Output release notes
-        id: output_release_notes
-        if: ${{ env.NEW_RELEASE == '1' }}
-        run: |
-          echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
-          cat release_notes.md >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
+          TAG_NAME: ${{ env.TAG_NAME }}
 
       - name: Create release
         if: ${{ env.NEW_RELEASE == '1' }}
-        uses: actions/create-release@v1
+        uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ env.TAG_NAME }}
-          release_name: ${{ env.PROPER_RELEASE_TITLE }} # No "Release" prefix here
-          body: ${{ env.RELEASE_NOTES }}
+          name: ${{ env.PROPER_RELEASE_TITLE }}
+          body_path: release_notes.md
           draft: false
           prerelease: ${{ env.IS_PRERELEASE }}
         env:
