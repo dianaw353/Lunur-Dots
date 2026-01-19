@@ -58,7 +58,7 @@
     default = current
 
 [submodule]
-    fetchJobs = 16
+    fetchJobs = 12 # To see whats best for you run: nproc --all
 
 [rebase]
     autoStash = true
