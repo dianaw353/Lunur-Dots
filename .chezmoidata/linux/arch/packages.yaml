@@ -214,8 +214,8 @@ packages:
         - xdg-desktop-portal-gtk
         - cliphist
         - wl-clipboard
-        - swww
-      aur: []
+      aur:
+        - awww-git 
       flatpak: []
 
     themeing:
