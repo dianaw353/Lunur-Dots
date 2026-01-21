@@ -130,6 +130,7 @@ packages:
           pacman:
             - qemu-desktop
             - libvirt
+            - dnsmasq
           aur: []
           flatpak: []
   
