@@ -69,8 +69,8 @@ packages:
         - gamescope
       aur:
         - protonplus
-        - faugus-launcher
-        # - heroic-games-launcher-bin # alternitve storefrount for Epic, Prime, and Prime Games
+        # - faugus-launcher
+        - heroic-games-launcher-bin # alternitve storefrount for Epic, Prime, and Prime Games
         - protontricks
       flatpak: []
 
@@ -216,7 +216,7 @@ packages:
         - cliphist
         - wl-clipboard
       aur:
-        - awww-git 
+        - awww-bin 
       flatpak: []
 
     themeing:

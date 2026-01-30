@@ -6,7 +6,7 @@ services:
       - cups
     login_manager:
       ly:
-        - ly@tty2
+        - ly@tty1
     gaming:
       - gamemoded
   user:

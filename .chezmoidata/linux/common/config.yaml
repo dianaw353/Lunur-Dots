@@ -30,7 +30,7 @@ config:
         pipewire:
           enable: true
       limine:
-        snapper_sync: true
+        snapper_sync: false
         journalctl_desktop_notification: false
       printing:
         # enables printing support using cups
@@ -50,14 +50,14 @@ config:
       ### Extra packages ###
       command_utils: true # reccommended to always be enabled
       gaming: true
-      flatpak: false # Also includes Flatseal
+      flatpak: true # Also includes Flatseal
       school: false # install packages for school
     virtualization:
       qemu:
         # Install packages for QEMU
-        enable: false
+        enable: true
         # Virt Manager is a frontend for KVM/QEMU
-        virt_manager: false
+        virt_manager: true
       virtualbox: false
 
   ### Desktop Stack ###
